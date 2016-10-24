@@ -1,5 +1,10 @@
 
 public class StepCounter {
+	
+	public static void main (String[] args){
+		
+		
+	}
 
 	/***
 	 * Counts the number of steps based on sensor data
@@ -37,8 +42,8 @@ public class StepCounter {
 		for (int i = 1; i < magnitudes.length - 1; i++) {
 
 			if (magnitudes[i] > magnitudes[i - 1] && magnitudes[i] > magnitudes[i + 1]
-					&& calculateStandardDeviation(magnitudes, calculateMean(magnitudes)) > 2)
-				;
+					&& magnitudes[i] > 3 * (calculateStandardDeviation(magnitudes, calculateMean(magnitudes))) )
+			
 			peakCounter++;
 
 		}
@@ -93,8 +98,24 @@ public class StepCounter {
 
 		}
 
-		return sum / (double) arr.length;
+		return sum / arr.length;
 
+	}
+	
+	public static void replaceAbsoluteTimeWithElapsedTime(double[][] sensorData){
+		
+		double previous = sensorData[0][0];
+		
+		sensorData[0][0] = 0;
+		
+		for (int i = 1; i < sensorData.length; i++){
+			
+			sensorData[i][0] = sensorData[i][0] - previous;
+			
+			previous = sensorData[i][0];
+			
+		}
+		
 	}
 
 }
