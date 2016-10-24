@@ -17,83 +17,84 @@ public class StepCounter {
 	 */
 
 	public static int countSteps(double[] times, double[][] sensorData) {
-		
+
 		double[][] smallerData = new double[sensorData.length][3];
 
-		for (int row = 0; row < sensorData.length; row++){
-			
-			for (int col = 0; col < 2; col++){
-				
+		for (int row = 0; row < sensorData.length; row++) {
+
+			for (int col = 0; col < 2; col++) {
+
 				smallerData[row][col] = sensorData[row][col];
-				
+
 			}
-			
+
 		}
-		
+
 		double[] magnitudes = calculateMagnitudesFor(smallerData);
-		
+
 		int peakCounter = 0;
-		 
-		for (int i = 1; i <  magnitudes.length - 1; i++) {
- 
-			if (magnitudes[i] > magnitudes[i - 1] && magnitudes[i] > magnitudes[i + 1] && calculateStandardDeviation(magnitudes, calculateMean(magnitudes)) > 2);
-				peakCounter++;
- 
+
+		for (int i = 1; i < magnitudes.length - 1; i++) {
+
+			if (magnitudes[i] > magnitudes[i - 1] && magnitudes[i] > magnitudes[i + 1]
+					&& calculateStandardDeviation(magnitudes, calculateMean(magnitudes)) > 2)
+				;
+			peakCounter++;
+
 		}
-		
+
 		return peakCounter;
 
 	}
-	
-	public static double calculateMagnitude(double x, double y, double z){
-		
+
+	public static double calculateMagnitude(double x, double y, double z) {
+
 		return Math.sqrt((x * x) + (y * y) + (z * z));
-		
+
 	}
-	
-	private static double[] calculateMagnitudesFor(double[][] sensorData){
-		
+
+	private static double[] calculateMagnitudesFor(double[][] sensorData) {
+
 		double[] magnitudes = new double[sensorData.length];
-			
-		for (int row = 0; row < sensorData.length; row++){
-				
+
+		for (int row = 0; row < sensorData.length; row++) {
+
 			magnitudes[row] = calculateMagnitude(sensorData[row][0], sensorData[row][1], sensorData[row][2]);
-				
-			
+
 		}
-		
+
 		return magnitudes;
-		
+
 	}
-	
-	private static double calculateStandardDeviation(double[] arr, double mean){
-		
+
+	private static double calculateStandardDeviation(double[] arr, double mean) {
+
 		double sum = 0;
-		
-		for (int i = 0; i < arr.length; i++){
-			
+
+		for (int i = 0; i < arr.length; i++) {
+
 			sum += (arr[i] - mean) * (arr[i] - mean);
-			
+
 		}
-		
+
 		sum /= (double) (arr.length - 1);
-		
+
 		return Math.sqrt(sum);
-		
+
 	}
-	
-	private static double calculateMean(double[] arr){
-		
+
+	private static double calculateMean(double[] arr) {
+
 		double sum = 0;
-		
-		for (int i = 0; i < arr.length; i++){
-			
+
+		for (int i = 0; i < arr.length; i++) {
+
 			sum += arr[i];
-			
+
 		}
-		
-		return sum/(double) arr.length;
-		
+
+		return sum / (double) arr.length;
+
 	}
 
 }
