@@ -38,16 +38,26 @@ public class StepCounter {
 		double[] magnitudes = calculateMagnitudesFor(smallerData);
 
 		int peakCounter = 0;
+		
+		boolean crossedPeakThreshold = false;
 
 		for (int i = 1; i < magnitudes.length - 1; i++) {
 
 			if (magnitudes[i] > magnitudes[i - 1] && magnitudes[i] > magnitudes[i + 1]
-					&& magnitudes[i] > 3 * (calculateStandardDeviation(magnitudes, calculateMean(magnitudes))) )
+					&& magnitudes[i] > calculateMean(magnitudes) + .7 * (calculateStandardDeviation(magnitudes, calculateMean(magnitudes))) ){
 			
-			peakCounter++;
+			crossedPeakThreshold = true;
 
 		}
-
+			
+			else if (magnitudes[i] < magnitudes[i - 1] && magnitudes[i] < magnitudes[i + 1] && magnitudes[i] < calculateMean(magnitudes) - .25 * (calculateStandardDeviation(magnitudes, calculateMean(magnitudes))) && crossedPeakThreshold){
+			
+				peakCounter++;
+				
+				crossedPeakThreshold = false;
+			
+		}}
+		
 		return peakCounter;
 
 	}
